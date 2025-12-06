@@ -39,7 +39,7 @@ print(df[['LV_ActivePower', 'TheoreticalPower', 'PerformanceScore', 'Performance
 df['LV_ActivePower'].fillna(method='ffill', inplace=True)
 
 
-def create_windowed_data(series, window_size=5):
+def fn(series, window_size=5):
   
     X, y = [], []
     for i in range(len(series) - window_size):
@@ -48,7 +48,7 @@ def create_windowed_data(series, window_size=5):
     return np.array(X), np.array(y)
 
 
-X, y = create_windowed_data(df['LV_ActivePower'].values, window_size=5)
+X, y = fn(df['LV_ActivePower'].values, window_size=5)
 
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
@@ -84,4 +84,5 @@ df['Category'] = df['PerformanceScore'].apply(categorize)
 
 
 print(df[df['Anomaly']].head())
+
 
